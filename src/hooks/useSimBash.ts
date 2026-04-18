@@ -1,6 +1,6 @@
 "use client"
 
-import {Dispatch, SetStateAction, useCallback, useState} from "react";
+import {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
 
 const animatedTyping = (setStateText:  Dispatch<SetStateAction<string>>,
                                                             stateText: string,
@@ -22,12 +22,22 @@ const animatedTyping = (setStateText:  Dispatch<SetStateAction<string>>,
 
 export function useSimBash(username = "jdoe",
                            hostname = "my-pc",
-                           startingDir = "~") {
+                           startingDir = "~",
+                           blinkRate = 500) {
 
     const shellPrompt = `[${username}@${hostname} ${startingDir}]$ `;
     const [currentDir, setCurrentDir] = useState(startingDir);
     const [buffer, setBuffer] = useState(shellPrompt);
     const [isTyping, setIsTyping] = useState(false);
+    const [blink, setBlink] = useState(true);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setBlink(prev => !prev);
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, []);
 
     const handleInput = useCallback(async (input: string, output = "", delay = 50) => {
         if (isTyping) return;
@@ -39,6 +49,6 @@ export function useSimBash(username = "jdoe",
         setIsTyping(false);
     }, [buffer, isTyping, shellPrompt]);
 
-    return { buffer, handleInput };
+    return { buffer, handleInput, blink, isTyping };
 
 }
