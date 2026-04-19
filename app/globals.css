@@ -24,11 +24,3 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-
-.text-glow {
-  color: #64ff84;
-  text-shadow:
-          0 0 10px #01ba30,
-          0 0 18px #25e253,
-          0 0 30px rgba(86, 253, 123, 0.8);
-}
