@@ -1,16 +1,32 @@
 "use client"
 
-import {useSimBash} from "@/src/hooks/useSimBash";
-import {useEffect, useState} from "react";
+import "@/components/SimBash.css"
 
-export default function SimBash(
+type SimBashProps = {
+    buffer: string,
+    isTyping: boolean
+    idle: boolean
+    props: string
+}
 
+export function SimBash({buffer,
+                        isTyping,
+                        idle = false,
+                        props = ""} : SimBashProps
 ) {
 
-    const { buffer, handleInput } = useSimBash("mmarquez", "resume");
-
     return (
-        <pre className={"text-xl drop-shadow-[0_0_8px_rgba(255,0,0,0.7)] font-mono text-green-400 shadow-green-800"}>{buffer}</pre>
+        <div className={`-z-10 ${props}`} aria-hidden="true">
+            { /* Black overlay */}
+            <div className={`${idle ? "console-fade-on" : "console-fade-off"} absolute inset-0 h-screen w-screen bg-background -z-1`}></div>
+            <pre className={`relative text-glow text-left sm:text-3xl lg:text-3xl text-green-400 shadow-green-800 console-zoom -z-10`}>
+                {buffer}
+                <span className={isTyping ? "" : "bash-cursor"}>
+                    █
+                </span>
+            </pre>
+        </div>
+
     )
 
 }

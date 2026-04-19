@@ -1,0 +1,23 @@
+.text-glow {
+    color: #64ff84;
+    text-shadow:
+            0 0 10px #01ba30,
+            0 0 18px #25e253,
+            0 0 30px rgba(86, 253, 123, 0.8);
+}
+.bash-cursor {
+    display: inline-block;
+    animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.console-fade-on {
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+}
+.console-fade-off {
+    opacity: 0;
+}
