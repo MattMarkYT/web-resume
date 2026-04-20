@@ -1,20 +1,13 @@
-"use client"
-
 import "@/components/SimBash.css"
+import {useSimBashContext} from "@/src/providers/SimBashProvider";
 
 type SimBashProps = {
-    buffer: string,
-    isTyping: boolean
-    idle: boolean
-    props: string
+    props?: string
 }
 
-export function SimBash({buffer,
-                        isTyping,
-                        idle = false,
-                        props = ""} : SimBashProps
+export function SimBash({props = ""} : SimBashProps
 ) {
-
+    const { buffer, isTyping, idle } = useSimBashContext();
     return (
         <div className={`-z-10 ${props}`} aria-hidden="true">
             { /* Black overlay */}

@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import useIsMobile from "@/src/hooks/useIsMobile";
+import {SimBashProvider} from "@/src/providers/SimBashProvider";
+import {SimBash} from "@/components/SimBash";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +38,9 @@ export default function RootLayout({
       className={`${geistMono.variable} ${geistSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+      <SimBashProvider username="mmarquez" hostname="resume">
         {children}
+      </SimBashProvider>
       </body>
     </html>
   );

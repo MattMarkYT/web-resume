@@ -7,13 +7,13 @@ import { SplitText } from "gsap/all";
 import {useEffect, useState} from "react";
 import Navbar from "@/components/Navbar";
 import useIsMobile from "@/src/hooks/useIsMobile";
+import {useSimBashContext} from "@/src/providers/SimBashProvider";
 
 
 export default function Home(){
     gsap.registerPlugin(SplitText);
 
-    const { buffer, handleInput, toggleZoom, isTyping, idle } = useSimBash({username:"mmarquez", hostname:"resume"});
-    const [isIntroVisible, setIsIntroVisible] = useState(false);
+    const { handleInput, toggleZoom, idle } = useSimBashContext();
     const isMobile = useIsMobile();
 
     useEffect(() => {
@@ -23,7 +23,6 @@ export default function Home(){
             await handleInput("./intro", "Rendering intro...", 75, 800);
 
             gsap.set(".navbar-anim", { y: isMobile ? 1000 : -100 });
-            setIsIntroVisible(true);
             toggleZoom();
             requestAnimationFrame(() => {
                 gsap.to(split.chars, {
@@ -38,10 +37,10 @@ export default function Home(){
 
     return (
         <div className={"relative font-sans"}>
-            <Navbar props={`navbar-anim ${isIntroVisible ? "" : "hidden"}`}/>
-            <SimBash buffer={buffer} isTyping={isTyping} idle={idle} props={"py-16 px-4"}/>
+            <Navbar/>
+            <SimBash props={"py-16 px-4"}/>
             <div className={"absolute inset-0 flex justify-center"}>
-                    <div className={`text-center text-4xl sm:text-5xl lg:text-7xl py-40 ${isIntroVisible ? "" : "hidden"}`}>
+                    <div className={`text-center text-4xl sm:text-5xl lg:text-7xl py-40 ${idle ? "" : "hidden"}`}>
                         <p className={"split font-medium lg:text-6xl mb-2 lg:mb-4"}>
                             Hi! I&apos;m</p>
                         <p className={"split font-semibold"}>Matthew Marquez</p>
